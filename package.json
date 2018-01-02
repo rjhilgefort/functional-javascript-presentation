@@ -1,0 +1,14 @@
+{
+  "name": "fp-intro",
+  "version": "1.0.0",
+  "description": "An intro to functional programming in JavaScript",
+  "author": "@rjhilgefort",
+  "main": "index.js",
+  "scripts": {
+    "build": "md2gslides slides.md"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "md2gslides": "^0.3.0"
+  }
+}
