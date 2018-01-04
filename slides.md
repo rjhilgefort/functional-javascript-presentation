@@ -36,17 +36,25 @@
 
 - A "101" talk
 - Enablement to read/write FP in the real world
-- An advertisement for Ramda (basically)
 
 **Is Not**
 
-- An intro to JS (assumes modern JS knowldege)
+- An intro to JS
 - A deep dive into FP
 - ADT Coverage
+- Covering Hindly-Milner Notation
 
 {.column}
 
 .![](https://image.slidesharecdn.com/designersprogramadores-no-front-slide-160315170004/95/designers-developers-4-638.jpg?cb=1458061374)
+
+
+
+---
+
+
+
+.![](https://m4n3z40.github.io/fp-intro-presentation/img/james-iry-about-fpers.png){.background}
 
 
 
@@ -122,9 +130,9 @@ https://en.wikipedia.org/wiki/Procedural_programming
 - Purity
 - Referential Transparency
 - Immutability
+- Composition
+- Pointfree
 - Currying
-- Composition (vs Inheritance)
-- Point-free
 
 {.column}
 
@@ -142,7 +150,7 @@ https://en.wikipedia.org/wiki/Procedural_programming
 
 # <span style="color:white">That's A Lot</span>
 
-## <span style="color:black">Why should I bother?</span>
+## <span style="color:white">Why should I bother?</span>
 
 ![](https://www.maxim.com/.image/t_share/MTQzODYyMzMxMjcxNTU0MTI0/home-alonejpg.jpg){.background}
 
@@ -196,7 +204,7 @@ Programming is done with expressions or declarations instead of statements. In c
 const nums = [2, 5, 8];
 
 for (let i = 0; i < nums.length; i++) {
-  nums[i] = nums[i] ** 2
+  nums[i] = nums[i] * 2
 }
 
 console.log(nums)
@@ -209,7 +217,7 @@ console.log(nums)
 // Declarative
 // Double every number in list
 
-const double = x => x ** 2
+const double = x => x * 2
 
 const nums = [2, 5, 8];
 const numsDoubled = nums.map(double)
@@ -220,6 +228,7 @@ console.log(numsDoubled)
 
 <!--
 - Code comments in imperative programs are often declarative!
+- By naming the logic of doubling, we can use it by itself, or with map
 -->
 
 
@@ -338,7 +347,7 @@ A **pure** function is a function that, given the same input, will always return
 - Always returns a value
 - Immutability
 - Doesn't have any **side effects**
-- **referential trasparency**
+- **referential transparency**
 - **function composition**
 
 {.column}
@@ -545,7 +554,7 @@ doubleObjVal(addOneObjVal(foo))
 
 
 
-# Benefits Of Purity
+# <span style="color:white">Benefits Of Purity</span>
 
 ![](https://cdn-images-1.medium.com/max/1600/1*lHMDe_A2Cs_4InZ-E9Da9A.png){.background}
 
@@ -612,6 +621,303 @@ Because our method `foo` is pure, we can use a technique called equational reaso
 
 
 
+# <span style="color:white">Yeah Yeah Yeah</span>
+
+## <span style="color:white">But what does this mean for my code?</span>
+
+![](https://cdn.deseretnews.com/images/article/hires/1619727/1619727.jpg){.background}
+
+<!--
+- We have to understand and respect purity so we can talk about the payoff!
+- Currying and composition!
+-->
+
+
+
+---
+
+
+
+# Composition
+
+## Functional husbandry (breeding functions)
+
+**Function composition** is the process of combining two or more functions in order to produce a new function or perform some computation. For example, the composition `f . g` (the dot means “composed with”) is equivalent to `f(g(x))` in JavaScript. This is a critical tool in FP!
+
+All we're doing here is piping the output of one function directly into another function without any intermediate state.
+
+<!--
+- Let's go ahead and define compose so we can start using it.
+
+#REFS
+- https://opensource.com/article/17/6/functional-javascript
+-->
+
+
+
+---
+
+
+
+# Compose: Simple Implementation
+
+```javascript
+// compose :: (Function -> Function) -> * a -> a
+const compose = (f, g) => {
+  return x => {
+    return f(g(x));
+  };
+};
+
+const add1 = x => x + 1
+const add2 = compose(add1, add1)
+
+console.log(add2(2)) // 4
+```
+
+{.column}
+
+Our simple `compose` function takes two functions, then a value `x`, then calls those function from right-to-left with a value `x`. By not providing the "data" right away, we're creating a new, reusable, function from our smaller function (Higher Order Functions).
+
+Composition is associative (like addition).
+
+<!--
+- Creating a function from functions? That means `compose` is a HOF
+- We're limited to two functions in our compose... we need something better
+- TODO: Do a slide on what it means to be associative.
+-->
+
+
+
+---
+
+
+
+# Ramda
+
+## Robust `compose` implementation
+
+"Ramda" offers a ton of great FP tools, one of which is a `compose` which handles any number of functions. Also offers a sister function in `pipe` which processes from left-to-right. There are many other libraries which offer FP tools, including `lodash/fp`.
+
+```javascript
+import { compose } from 'ramda'
+compose(console.log)('hi')
+```
+
+<!--
+- When you see `compose` assume it's from ramda
+-->
+
+
+
+---
+
+
+
+# Pointfree
+
+## No intermediate state
+
+Pointfree style means never having to say your data. Functions never mention the data upon which they operate. First class functions, currying, and composition all play well together to create this style. Pointfree code can help us remove needless names and keep us concise and generic.
+
+<!--
+- Something to strive for in FP, but not to be treated as dogma.
+
+#REFS
+- https://drboolean.gitbooks.io/mostly-adequate-guide/content/ch5.html#pointfree
+-->
+
+
+
+---
+
+
+
+# Pointfree
+
+```javascript
+// Not pointfree
+const toUpper = x => x.toUpper()
+const exclaim = x => x.concat('!!!')
+
+const loudExclaim = x => {
+  const upperX = toUpper(x)
+  return exclaim(upperX)
+}
+
+loudExclaim('losant') // LOSANT!!!
+```
+
+{.column}
+
+```javascript
+// Pointfree
+import {
+  toUpper, concat,
+} from 'ramda'
+
+const exclaim = concat('!!!')
+
+const loudExclaim =
+  compose(exclaim, toUpper)
+
+loudExclaim('losant') // LOSANT!!!
+```
+
+<!--
+- Not point free because we name our data in `x` and also create `upperX`
+-->
+
+
+
+---
+
+
+
+# Wait
+
+## Ramda concat takes two args...
+
+
+<!--
+- Yes it does! That's a technique called...
+-->
+
+
+
+---
+
+
+
+# <span style="color:white">Currying!</span>
+
+## <span style="color:white">(Just as tasty as the food)</span>
+
+![](https://i.ndtvimg.com/i/2017-01/curry-recipes-620_620x350_71484920309.jpg){.background}
+
+
+
+---
+
+
+
+# Currying
+
+## One at a time args
+
+You can call a function with fewer arguments than it expects. It returns a function that takes the remaining arguments. Because of this, it is critical that your `data` be supplied as the final argument (`lodash` vs `ramda`/`lodash/fp`)
+
+- **Manual currying:** Must be called one at a time.
+- **Auto-currying:** Can be called like a normal function if desired.
+
+<!--
+- mention manual vs autocurrying
+-->
+
+
+
+---
+
+
+
+# Manual vs Auto-Currying
+
+```javascript
+// Manual currying
+const add = (x) => {
+  return (y) => {
+    return (z) => {
+      return x + y + z
+    }
+  }
+}
+
+const add = x => y => z => {
+  return x + y + z
+}
+
+add(1, 2, 3) // Error
+add(1)(2)(3) // 6
+```
+
+{.column}
+
+```javascript
+// Auto-Currying
+import { curry } from 'ramda'
+
+const add = curry((x, y, z) => {
+  return x + y + z
+})
+
+add(1, 2, 3) // 6
+add(1)(2)(3) // 6
+```
+
+
+
+---
+
+
+
+# Currying
+
+```javascript
+const add = x => y => x + y
+const add5 = add(5)
+
+add5(10) // 15
+
+const subtract =
+  curry((x, y) => x - y)
+const subtract5 =
+  subtract(__, 5)
+
+subtract5(10) // 5
+```
+
+{.column}
+
+```javascript
+import { replace } from 'ramda'
+
+const noVowels = replace(/[aeiouy]/ig)
+const censored = noVowels('*')
+
+censored('Chocolate Rain')
+// 'Ch*c*l*t* R**n'
+```
+
+<!--
+- __: ramda A special placeholder value used to specify "gaps" within curried functions, allowing partial application of any combination of arguments, regardless of their positions.
+
+# REFS
+- https://drboolean.gitbooks.io/mostly-adequate-guide/content/ch4.html#cant-live-if-livin-is-without-you
+-->
+
+
+
+---
+
+
+# .
+
+![](https://m4n3z40.github.io/fp-intro-presentation/img/fp-all-the-things.jpg){.background}
+
+
+
+---
+
+
+
+(Real Code Demo)
+
+
+
+---
+
+
+
 # Fin
 
 **That's it. Thanks.**
@@ -630,12 +936,3 @@ Oh, this talk was stolen! I picked code examples and some definitions here and t
 You think I missed something? Saw a silly typo? Just generally want to improve upon this talk? You can help me fix it!
 
 I made this talk using [md2googleslides](https://github.com/googlesamples/md2googleslides) which allowed me to write the whole thing in markdown and build it to Google Slides. You can submit a PR to the repo so the next time I give the talk, it'll suck less!
-
-
----
-
-# Extra
-
-- fp all things https://m4n3z40.github.io/fp-intro-presentation/img/fp-all-the-things.jpg
-- tweet https://m4n3z40.github.io/fp-intro-presentation/img/james-iry-about-fpers.png
-- homer https://cdn-images-1.medium.com/max/1600/1*AM83LP9sGGjIul3c5hIsWg.png
