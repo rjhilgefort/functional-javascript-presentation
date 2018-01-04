@@ -5,7 +5,7 @@
   "author": "@rjhilgefort",
   "main": "index.js",
   "scripts": {
-    "build": "md2gslides slides.md"
+    "build": "md2gslides slides.md --style tomorrow-night-eighties"
   },
   "license": "ISC",
   "dependencies": {
