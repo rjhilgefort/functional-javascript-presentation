@@ -1,4 +1,4 @@
-# Intro To Functional Javascript
+# Intro To Functional JavaScript
 ## Rob Hilgefort
 
 
@@ -56,6 +56,10 @@
 
 .![](https://m4n3z40.github.io/fp-intro-presentation/img/james-iry-about-fpers.png){.background}
 
+<!--
+https://www.quora.com/What-are-Zygohistomorphic-prepromorphisms-and-how-are-they-used
+-->
+
 
 
 ---
@@ -72,47 +76,13 @@ Functional programming is declarative rather than imperative, and application st
 
 Other examples of programming paradigms include procedural programming and object oriented programming.
 
-- Procedural programming is generally what you would call a "script", where instructions are a series of computational steps to be carried out.
-- Object oriented programming (OOP), encourages data where application state is usually shared and colocated with methods in objects.
+- **Procedural programming** is generally what you would call a "script", where instructions are a series of computational steps to be carried out.
+- **Object oriented programming** (OOP), where application state is usually shared and colocated with methods in objects.
 
 <!--
 # REFS
 https://medium.com/javascript-scene/master-the-javascript-interview-what-is-functional-programming-7f218c68b3a0
 https://en.wikipedia.org/wiki/Procedural_programming
--->
-
-
-
----
-
-
-
-# Why Functional Programming
-
-- Predictability
-- Testability
-- Easy to reason about
-- Easy to refactor
-- Concurrency
-- DRY
-
-{.column}
-
-.![](http://images.genius.com/ff26c4e75a0ef8ad88f4e7db7e63416b.1000x1000x1.jpg)
-
-<!--
-- Predictability
-  - Pure functions, same output on consecutive calls
-- Testability
-  - Pure functions are easy to test because you don't have to "mock the world" for different cases
-- Easy to reason about
-  - Declarative code indicates intent from the get go
-- DRY
-  - FP encourages tiny composable methods (lego blocks) which are easy to reuse
-- Easy to refactor
-  - Tiny composable methods are easy to move around
-- Concurrency
-  - Because FP apps are pure and the side effects delegated to the edges of the app, concurrency is much easier to achieve
 -->
 
 
@@ -167,6 +137,40 @@ https://en.wikipedia.org/wiki/Procedural_programming
 
 
 
+# Why Functional Programming
+
+- Predictability
+- Testability
+- Easy to reason about
+- Easy to refactor
+- Concurrency
+- DRY
+
+{.column}
+
+.![](http://images.genius.com/ff26c4e75a0ef8ad88f4e7db7e63416b.1000x1000x1.jpg)
+
+<!--
+- Predictability
+  - Pure functions, same output on consecutive calls
+- Testability
+  - Pure functions are easy to test because you don't have to "mock the world" for different cases
+- Easy to reason about
+  - Declarative code indicates intent from the get go
+- DRY
+  - FP encourages tiny composable methods (lego blocks) which are easy to reuse
+- Easy to refactor
+  - Tiny composable methods are easy to move around
+- Concurrency
+  - Because FP apps are pure and the side effects delegated to the edges of the app, concurrency is much easier to achieve
+-->
+
+
+
+---
+
+
+
 # Declarative Programming
 
 ## Express the logic of a computation without describing its control flow.
@@ -207,8 +211,7 @@ for (let i = 0; i < nums.length; i++) {
   nums[i] = nums[i] * 2
 }
 
-console.log(nums)
-// [4, 10, 16]
+nums // [4, 10, 16]
 ```
 
 {.column}
@@ -222,8 +225,7 @@ const double = x => x * 2
 const nums = [2, 5, 8];
 const numsDoubled = nums.map(double)
 
-console.log(numsDoubled)
-// [4, 10, 16]
+numsDoubled // [4, 10, 16]
 ```
 
 <!--
@@ -240,6 +242,8 @@ console.log(numsDoubled)
 # JavaScript Enablement
 
 ## Not all languages can do that
+
+![](https://media.istockphoto.com/photos/silhouette-of-helping-hand-between-two-climber-picture-id463116677?k=6&m=463116677&s=612x612&w=0&h=MMMx1eRPGS2yVLjCqqrFUJgVr9RazWWqVaYneG0iCcc=){.background}
 
 <!--
 - As a JS developer I'm not showing you anything new.
@@ -377,12 +381,13 @@ https://drboolean.gitbooks.io/mostly-adequate-guide/content/ch3.html
 const names = [
   'Michael', 'Erin', 'Dylan', 'Wes', 'Bao', 'Taron',
 ]
+
 const maxNames = 5
+const isValidNames = names => {
+  return names.length <= maxNames
+}
 
-const isValidNames =
-  names => names.length <= maxNames
-
-console.log(isValidNames(names)) // false
+isValidNames(names) // false
 ```
 
 {.column}
@@ -398,7 +403,7 @@ const isValidNames = names => {
   return names.length <= maxNames
 }
 
-console.log(isValidNames(names)) // false
+isValidNames(names) // false
 ```
 
 
@@ -407,7 +412,7 @@ console.log(isValidNames(names)) // false
 
 
 
-# Purity: Returns A Value
+# Purity: Returns a Value
 
 ```javascript
 // Impure
@@ -415,13 +420,13 @@ const names = [
   'Michael', 'Erin', 'Dylan', 'Wes', 'Bao', 'Taron',
 ]
 
-const count
+let count
 const getNamesCount = names => {
   count = names.length
 }
 
 getNamesCount(names)
-console.log(count) // 6
+count // 6
 ```
 
 {.column}
@@ -436,7 +441,7 @@ const getNamesCount =
   names => names.length
 
 const count = getNamesCount(names)
-console.log(count) // 6
+count // 6
 ```
 
 
@@ -545,7 +550,7 @@ doubleObjVal(addOneObjVal(foo))
 
 
 
-# Mutability Is No bueno!
+# Mutability Es No Bueno!
 ## Complicates debugging and reasoning about code
 
 
@@ -597,12 +602,12 @@ const foo = (x, y) => {
 }
 
 const bar = foo(2, 3)
-console.log(bar) // 4
+bar // 4
 
 // referential transparency says...
 
 const bar = 4
-console.log(bar) // 4
+bar // 4
 ```
 
 {.column}
@@ -672,14 +677,14 @@ const compose = (f, g) => {
 const add1 = x => x + 1
 const add2 = compose(add1, add1)
 
-console.log(add2(2)) // 4
+add2(2) // 4
 ```
 
 {.column}
 
 Our simple `compose` function takes two functions, then a value `x`, then calls those function from right-to-left with a value `x`. By not providing the "data" right away, we're creating a new, reusable, function from our smaller function (Higher Order Functions).
 
-Composition is associative (like addition).
+Composition is associative (like addition), which means it doesn't matter how we group functions.
 
 <!--
 - Creating a function from functions? That means `compose` is a HOF
@@ -791,7 +796,7 @@ loudExclaim('losant') // LOSANT!!!
 
 # <span style="color:white">Currying!</span>
 
-## <span style="color:white">(Just as tasty as the food)</span>
+## <span style="color:white">(not the food but just as tasty)</span>
 
 ![](https://i.ndtvimg.com/i/2017-01/curry-recipes-620_620x350_71484920309.jpg){.background}
 
@@ -863,6 +868,8 @@ add(1)(2)(3) // 6
 # Currying
 
 ```javascript
+import { __ } from 'ramda'
+
 const add = x => y => x + y
 const add5 = add(5)
 
@@ -910,7 +917,7 @@ censored('Chocolate Rain')
 
 
 
-(Real Code Demo)
+# (Real Code Demo)
 
 
 
@@ -935,4 +942,4 @@ Oh, this talk was stolen! I picked code examples and some definitions here and t
 
 You think I missed something? Saw a silly typo? Just generally want to improve upon this talk? You can help me fix it!
 
-I made this talk using [md2googleslides](https://github.com/googlesamples/md2googleslides) which allowed me to write the whole thing in markdown and build it to Google Slides. You can submit a PR to the repo so the next time I give the talk, it'll suck less!
+I made this talk using [md2googleslides](https://github.com/googlesamples/md2googleslides) which allowed me to write the whole thing in markdown and build it to Google Slides. You can submit a PR to [the repo](https://github.com/rjhilgefort/functional-javascript-presentation) so the next time I give the talk, it'll suck less!
