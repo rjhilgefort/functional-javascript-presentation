@@ -1,5 +1,9 @@
 # Intro To Functional JavaScript
+
 ## Rob Hilgefort
+
+![](https://dz2cdn4.dzone.com/storage/article-thumb/13079-thumb.jpg){.background}
+
 
 
 
@@ -57,6 +61,8 @@
 .![](https://m4n3z40.github.io/fp-intro-presentation/img/james-iry-about-fpers.png){.background}
 
 <!--
+- You probably have some idea about what FP is already
+- Yes, that's a real term (though more of a meme than anything)
 https://www.quora.com/What-are-Zygohistomorphic-prepromorphisms-and-how-are-they-used
 -->
 
@@ -68,20 +74,38 @@ https://www.quora.com/What-are-Zygohistomorphic-prepromorphisms-and-how-are-they
 
 # Functional Programming
 
-Functional programming (FP) is a programming paradigm that is the process of building software by composing pure functions and avoiding shared state, mutable data, and side-effects.
-
-Functional programming is declarative rather than imperative, and application state flows through pure functions. To do so, one is encouraged to follow some core tenants and guiding principles.
+**Functional programming (FP) is a programming paradigm that is the process of building software by composing pure functions and avoiding shared state, mutable data, and side-effects.**
 
 {.column}
+
+.![](http://blog.danlew.net/content/images/2017/07/slide20.png)
+
+<!--
+- Functional programming is declarative rather than imperative, and application state flows through pure functions. To do so, one is encouraged to follow some core tenants and guiding principles.
+
+# REFS
+https://medium.com/javascript-scene/master-the-javascript-interview-what-is-functional-programming-7f218c68b3a0
+-->
+
+
+
+---
+
+
+
+# Functional Programming
 
 Other examples of programming paradigms include procedural programming and object oriented programming.
 
 - **Procedural programming** is generally what you would call a "script", where instructions are a series of computational steps to be carried out.
 - **Object oriented programming** (OOP), where application state is usually shared and colocated with methods in objects.
 
+{.column}
+
+.![](https://i.pinimg.com/736x/76/c0/df/76c0df8ee6d2a2d38237aa6e33a057c6--coding-procedural-programming.jpg)
+
 <!--
 # REFS
-https://medium.com/javascript-scene/master-the-javascript-interview-what-is-functional-programming-7f218c68b3a0
 https://en.wikipedia.org/wiki/Procedural_programming
 -->
 
@@ -118,16 +142,15 @@ https://en.wikipedia.org/wiki/Procedural_programming
 
 
 
-# <span style="color:white">That's A Lot</span>
+# <span style="color:red">That's A Lot</span>
 
-## <span style="color:white">Why should I bother?</span>
+## <span style="color:red">Why should I bother?</span>
 
 ![](https://www.maxim.com/.image/t_share/MTQzODYyMzMxMjcxNTU0MTI0/home-alonejpg.jpg){.background}
 
 <!--
 - Whoa, that's a lot, do I really need to know all this stuff to write safer things.
 - We're here to solve problems and put products out in the world, so why do we need to learn a new way to write code?
-- Code golf or real improvements?
 - Let's see through some examples
 -->
 
@@ -151,18 +174,101 @@ https://en.wikipedia.org/wiki/Procedural_programming
 .![](http://images.genius.com/ff26c4e75a0ef8ad88f4e7db7e63416b.1000x1000x1.jpg)
 
 <!--
-- Predictability
-  - Pure functions, same output on consecutive calls
-- Testability
-  - Pure functions are easy to test because you don't have to "mock the world" for different cases
-- Easy to reason about
-  - Declarative code indicates intent from the get go
-- DRY
-  - FP encourages tiny composable methods (lego blocks) which are easy to reuse
-- Easy to refactor
-  - Tiny composable methods are easy to move around
-- Concurrency
-  - Because FP apps are pure and the side effects delegated to the edges of the app, concurrency is much easier to achieve
+- Run through each advantage quickly
+-->
+
+
+
+---
+
+
+
+# Predictability
+##
+
+**Pure functions mean we always get the same output for a given input**
+
+
+
+---
+
+
+
+# Testability
+##
+
+**Pure functions are easy to test because you don't have to "mock the world" for different cases**
+
+
+
+---
+
+
+
+# Easy To Reason About
+##
+
+**Declarative code indicates intent and desire, self documenting**
+
+
+
+---
+
+
+
+# Don't Repeat Yourself
+##
+
+**FP encourages tiny composable methods (lego blocks) which are easy to reuse**
+
+
+
+---
+
+
+
+# Easy To Refactor
+##
+
+**Tiny composable methods are easy to move around and/or remove**
+
+
+
+---
+
+
+
+# Concurrency
+##
+
+**Because FP apps are pure and the side effects delegated to the edges of the app, concurrency is much easier to achieve**
+
+
+
+---
+
+
+
+# <span style="color:white">Where Do I Start?</span>
+
+![](http://www.gestaltreality.com/wp-content/uploads/2013/08/morpheus-red-pill-blue-pill.jpg){.background}
+
+
+
+---
+
+
+
+# Declarative Programming
+
+##
+
+Express the logic of a computation without describing its control flow.
+
+
+<!--
+# REFS
+- https://en.wikipedia.org/wiki/Declarative_programming
 -->
 
 
@@ -173,18 +279,18 @@ https://en.wikipedia.org/wiki/Procedural_programming
 
 # Declarative Programming
 
-## Express the logic of a computation without describing its control flow.
-
 Programming is done with expressions or declarations instead of statements. In contrast, **imperative programming** uses statements that change a program's state.
 
 **Imperative:** I see that table located under the Gone Fishin’ sign is empty. My husband and I are going to walk over there and sit down.
 
 **Declarative:** Table for two, please.
 
+{.column}
+
+.![](http://photo.foter.com/photos/pi/321/dining-table-for-two.jpg)
+
 <!--
-- Declarative Programming is like asking your friend to draw a landscape. You don’t care how they draw it, that’s up to them. Imperative Programming is like your friend listening to Bob Ross tell them how to paint a landscape. While good ole Bob Ross isn’t exactly commanding, he is giving them step by step directions to get the desired result.
 - The imperative approach is concerned with HOW you’re actually going to get a seat. You need to list out the steps to be able to show HOW you’re going to get a table.The declarative approach is more concerned with WHAT you want, a table for two.
-- Let's look at an example
 
 # REFS
 - https://en.wikipedia.org/wiki/Declarative_programming
@@ -239,9 +345,9 @@ numsDoubled // [4, 10, 16]
 
 
 
-# JavaScript Enablement
+# <span style="color:green">JavaScript Enablement</span>
 
-## Not all languages can do that
+## <span style="color:green">Not all languages can do that</span>
 
 ![](https://media.istockphoto.com/photos/silhouette-of-helping-hand-between-two-climber-picture-id463116677?k=6&m=463116677&s=612x612&w=0&h=MMMx1eRPGS2yVLjCqqrFUJgVr9RazWWqVaYneG0iCcc=){.background}
 
@@ -282,6 +388,16 @@ First class function support enables **higher order functions**- functions that 
 <!--
 https://stackoverflow.com/questions/10141124/any-difference-between-first-class-function-and-high-order-function
 -->
+
+
+
+---
+
+
+# .
+
+![](https://lifebeyondfife.com/wp-content/uploads/2015/05/functions.jpg){.background}
+
 
 
 ---
@@ -344,8 +460,19 @@ https://drboolean.gitbooks.io/mostly-adequate-guide
 
 
 # Purity
+##
 
-A **pure** function is a function that, given the same input, will always return the same output and does not have any observable side effect. Basic rules:
+A **pure** function is a function that, given the same input, will always return the same output and does not have any observable side effect.
+
+
+
+---
+
+
+
+# Purity
+
+**Basic rules:**
 
 - No outside scope
 - Always returns a value
@@ -356,15 +483,13 @@ A **pure** function is a function that, given the same input, will always return
 
 {.column}
 
-Purity is the secret sauce of FP and everything else is an effort to preserve it. Achieving purity implies **referential transparency** and allows for **function composition**. We'll get to those, but let's make sure we grok what purity means first.
-
+.![](https://nofluffjuststuff.com/s/magazine/2016/11/293_images/doesnotaffect.jpg)
 .![](http://i0.kym-cdn.com/photos/images/original/001/017/429/b8a.png)
 
 <!--
-- We'll talk about a few of those terms later
-- Let's walk through what these mean
+- Purity is the secret sauce of FP and everything else is an effort to preserve it. Achieving purity implies **referential transparency** and allows for **function composition**. We'll get to those, but let's make sure we grok what purity means first.
 
-#REFS
+# REFS
 https://drboolean.gitbooks.io/mostly-adequate-guide/content/ch3.html
 -->
 
@@ -454,12 +579,12 @@ count // 6
 
 ## Objects can’t be modified after it’s created
 
-In other words, you may not reassign properties/indexes on JS objects when you need to "update" some part of that structure. Doing so is called a **mutation** because we're modifying a piece of shared state in an application.
-
 Immutability is a central concept of functional programming because without it, the data flow in your program is lossy. State history is abandoned, and strange bugs can creep into your software.
 
 
 <!--
+- In other words, you may not reassign properties/indexes on JS objects when you need to "update" some part of that structure. Doing so is called a **mutation** because we're modifying a piece of shared state in an application.
+
 # REFS
 - https://medium.com/javascript-scene/master-the-javascript-interview-what-is-functional-programming-7f218c68b3a0
 -->
@@ -577,13 +702,10 @@ doubleObjVal(addOneObjVal(foo))
 
 ## An expression always evaluates to the same result in any context.
 
-By respecting the aforementioned rules of purity when building your functions, you achieve what is called **referential transparency**. This is perhaps the biggest payoff of striving for pure functions because it allows for you to more easily reason about your functions.
-
 A spot of code is referentially transparent when it can be substituted for its evaluated value without changing the behavior of the program.
 
 <!--
-- Most of the "good" examples from the past few slides do this
-- Let's look at one more example
+- By respecting the aforementioned rules of purity when building your functions, you achieve what is called **referential transparency**. This is perhaps the biggest payoff of striving for pure functions because it allows for you to more easily reason about your functions.
 -->
 
 
@@ -645,13 +767,14 @@ Because our method `foo` is pure, we can use a technique called equational reaso
 
 # Composition
 
-## Functional husbandry (breeding functions)
+## Functions Built From Functions
 
-**Function composition** is the process of combining two or more functions in order to produce a new function or perform some computation. For example, the composition `f . g` (the dot means “composed with”) is equivalent to `f(g(x))` in JavaScript. This is a critical tool in FP!
+**Function composition** is the process of combining two or more functions in order to produce a new function or perform some computation. For example, the composition `f . g` (the dot means “composed with”) is equivalent to `f(g(x))` in JavaScript.
 
-All we're doing here is piping the output of one function directly into another function without any intermediate state.
 
 <!--
+- This is a critical tool in FP!
+- All we're doing here is piping the output of one function directly into another function without any intermediate state.
 - Let's go ahead and define compose so we can start using it.
 
 #REFS
@@ -670,9 +793,9 @@ All we're doing here is piping the output of one function directly into another 
 // compose :: (Function -> Function) -> * a -> a
 const compose = (f, g) => {
   return x => {
-    return f(g(x));
-  };
-};
+    return f(g(x))
+  }
+}
 
 const add1 = x => x + 1
 const add2 = compose(add1, add1)
